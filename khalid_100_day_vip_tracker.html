@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Khalid — 100 Day Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#171614;--muted:#716d64;--paper:#f4f0e6;--paper2:#ebe4d5;--line:#d9d0be;--gold:#a37a32;--gold2:#d4b36d;--green:#2d845e;--red:#a94747;--dark:#0b0d10;--dark2:#15181d}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,system-ui,sans-serif}
+body{background:radial-gradient(circle at 20% 0%,#272b31 0,#101216 42%,#070809 100%);color:#f5f2ea;padding:18px 14px 24px}
+.app{width:min(980px,100%);margin:0 auto}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.brand h1{margin:0;font:700 38px/1 'Caveat',cursive;letter-spacing:.02em;color:#efe5cf}
+.brand p{margin:3px 0 0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9ea4ad}
+.actions{display:flex;gap:7px}
+.icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid #343941;background:#15181d;color:#e3c987;cursor:pointer;font-size:16px}
+.paper{position:relative;background:linear-gradient(180deg,var(--paper),#efe9dc);color:var(--ink);border-radius:22px;box-shadow:0 24px 70px #0009, inset 0 1px #fff8;overflow:hidden;padding:16px 18px 14px}
+.paper:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0,transparent 25px,rgba(101,117,135,.11) 26px);pointer-events:none}
+.paper:after{content:"";position:absolute;top:0;bottom:0;left:48px;width:1px;background:rgba(177,76,76,.19);pointer-events:none}
+.paper>*{position:relative;z-index:1}
+.top-note{display:flex;justify-content:space-between;align-items:flex-end;margin-left:40px;gap:10px}
+.challenge-title{font:700 33px/1 'Caveat',cursive;letter-spacing:.01em}
+.challenge-sub{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-top:2px}
+.day-pill{background:#1b1e24;color:#f8f3e8;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 3px 10px #0002}
+.progress{height:9px;background:#d8cfbd;border-radius:99px;margin:12px 0 10px 40px;overflow:hidden;border:1px solid #c7bca7}
+.progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .35s}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-left:40px;margin-bottom:12px}
+.stat{background:rgba(255,255,255,.45);border:1px solid #ddd4c3;border-radius:12px;padding:7px 9px}
+.stat b{display:block;font-size:16px}.stat span{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:2px 0 6px 40px}
+.section-head h2{margin:0;font:600 23px/1 'Caveat',cursive}.hint{font-size:9px;color:var(--muted)}
+.day-grid{margin-left:40px;display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.day{aspect-ratio:1/0.86;border-radius:9px;border:1px solid #d5ccb9;background:rgba(255,255,255,.52);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.18s;user-select:none}
+.day:hover{transform:translateY(-1px);box-shadow:0 4px 10px #0001}.day .n{font-weight:800;font-size:11px;line-height:1}.day .pct{font-size:7px;margin-top:3px;color:#928a7b}.day.today{border-color:var(--gold);box-shadow:0 0 0 2px rgba(163,122,50,.18);background:#fbf4df}.day.done{background:rgba(45,132,94,.12);border-color:#7ab295}.day.done .pct{color:var(--green);font-weight:700}.day.partial{background:rgba(163,122,50,.13);border-color:#c6a76f}.day.missed{background:rgba(169,71,71,.09);border-color:#c58b8b}.day.missed .pct{color:var(--red)}.day.future{opacity:.45;cursor:default}
+.footer-row{display:flex;justify-content:space-between;align-items:center;margin:10px 0 0 40px;gap:10px}.footer-quote{font:600 15px/1.1 'Caveat',cursive;color:#4d483e}.footer-tag{font-size:9px;color:#7f786b;text-transform:uppercase;letter-spacing:.12em;text-align:right}
+.setup{max-width:470px;margin:40px auto;padding:24px}.setup h2{font:700 32px/1 'Caveat',cursive;margin:0 0 4px}.setup p{font-size:12px;color:var(--muted);margin:0 0 16px}.setup input,.field{width:100%;padding:11px;border:1px solid #cfc5b2;border-radius:11px;background:#fffaf0;font:500 13px Inter}.gold-btn{width:100%;border:0;background:#1b1e24;color:#f6edd9;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;margin-top:10px}.ghost-btn{width:100%;border:1px solid #cfc5b2;background:rgba(255,255,255,.4);color:var(--ink);padding:10px;border-radius:11px;cursor:pointer;margin-top:7px;font-weight:600}
+.overlay{position:fixed;inset:0;background:rgba(5,6,8,.76);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:14px;z-index:30}.overlay.show{display:flex}.modal{width:min(560px,100%);max-height:min(86vh,760px);overflow:auto;background:var(--paper);color:var(--ink);border:1px solid #fff5;border-radius:20px;box-shadow:0 25px 80px #000b;padding:17px}.modal h3{font:700 29px/1 'Caveat',cursive;margin:0}.modal-sub{font-size:10px;color:var(--muted);margin:2px 0 10px}.modal-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.close{border:0;background:transparent;font-size:22px;color:var(--muted);cursor:pointer}.checks{border-top:1px solid var(--line);margin-top:7px}.check{display:flex;align-items:center;gap:9px;padding:8px 2px;border-bottom:1px dashed #d8cfbe}.check input{width:18px;height:18px;accent-color:var(--green)}.check label{font-size:11px;line-height:1.2}.note{width:100%;min-height:62px;margin-top:9px;border:1px solid #d2c7b2;background:#fffaf0;border-radius:11px;padding:9px;font:500 12px Inter;resize:vertical}.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.small-btn{border:1px solid #cfc5b2;background:#fffaf0;padding:10px;border-radius:11px;font-size:11px;font-weight:700;cursor:pointer}.danger{color:var(--red);border-color:#c9a0a0}.target-row{display:flex;gap:6px;margin:6px 0}.target-row input{flex:1}.target-row button{width:37px;border:1px solid #d2c7b2;background:#fff8eb;color:var(--red);border-radius:9px;cursor:pointer}
+.review{background:rgba(255,255,255,.42);border:1px solid #d8cebc;border-radius:13px;padding:11px;margin-top:10px}.review h4{margin:0 0 6px;font:700 23px/1 'Caveat',cursive}.review p{font-size:11px;line-height:1.4;margin:4px 0;color:#4e493f}
+.share-card{display:none;position:fixed;right:18px;bottom:18px;background:#15181d;color:#f4ebd6;border:1px solid #343941;border-radius:14px;padding:10px 12px;box-shadow:0 10px 30px #0007;z-index:20}
+@media (max-width:700px){body{padding:10px}.brand h1{font-size:31px}.challenge-title{font-size:28px}.paper{padding:12px 10px 11px;border-radius:18px}.paper:after{left:31px}.top-note,.progress,.stats,.section-head,.day-grid,.footer-row{margin-left:26px}.day-grid{grid-template-columns:repeat(10,1fr);gap:4px}.day{border-radius:7px}.day .n{font-size:9px}.day .pct{font-size:6px}.stats{gap:5px}.stat{padding:6px}.stat b{font-size:13px}.stat span{font-size:7px}.footer-quote{font-size:13px}.footer-tag{font-size:7px}.actions .icon-btn{width:33px;height:33px}}
+@media (max-width:420px){.day-grid{gap:3px}.day{aspect-ratio:1/0.9}.top-note{align-items:flex-start}.day-pill{font-size:10px;padding:7px 9px}.stats{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="brand"><h1>Khalid's 100 Days</h1><p>one day · one percent · one better version</p></div>
+    <div class="actions"><button class="icon-btn" title="Customize" onclick="openSettings()">✎</button><button class="icon-btn" title="Backup" onclick="exportData()">⇩</button></div>
+  </div>
+  <div id="setup" class="paper setup" style="display:none">
+    <h2>Start your 100 days.</h2><p>Pick Day 1. Everything else will be tracked automatically.</p>
+    <input id="startDate" type="date"><button class="gold-btn" onclick="startChallenge()">Start Challenge</button>
+  </div>
+  <main id="main" class="paper" style="display:none">
+    <div class="top-note"><div><div class="challenge-title">My 100-Day Challenge</div><div class="challenge-sub">Better than yesterday. Not perfect.</div></div><div class="day-pill" id="currentPill">DAY 1 / 100</div></div>
+    <div class="progress"><span id="progressBar"></span></div>
+    <div class="stats">
+      <div class="stat"><b id="streak">0</b><span>Day streak</span></div>
+      <div class="stat"><b id="avg">0%</b><span>Average</span></div>
+      <div class="stat"><b id="locked">0</b><span>Days logged</span></div>
+      <div class="stat"><b id="best">0%</b><span>Best day</span></div>
+    </div>
+    <div class="section-head"><h2>100 days, one page.</h2><span class="hint">Tap any available day</span></div>
+    <div id="grid" class="day-grid"></div>
+    <div class="footer-row"><div id="quote" class="footer-quote">"Small steps. Serious change."</div><div class="footer-tag">NO ZERO DAYS</div></div>
+  </main>
+</div>
+
+<div id="dayModal" class="overlay"><div class="modal"><div class="modal-top"><div><h3 id="dayTitle">Day 1</h3><div id="daySub" class="modal-sub"></div></div><button class="close" onclick="closeModal('dayModal')">×</button></div><div id="checks" class="checks"></div><textarea id="note" class="note" placeholder="One line: what did you learn, fix, or improve today?"></textarea><div class="row2"><button class="small-btn" onclick="saveDayNote()">Save note</button><button class="small-btn" onclick="lockToday()">Lock today's day</button></div><div id="dayReview" class="review" style="display:none"></div></div></div>
+
+<div id="settingsModal" class="overlay"><div class="modal"><div class="modal-top"><div><h3>Your routine</h3><div class="modal-sub">Make the tracker yours. Add your own skill, work, study or life targets.</div></div><button class="close" onclick="closeModal('settingsModal')">×</button></div><div id="targets"></div><button class="ghost-btn" onclick="addTarget()">+ Add target</button><button class="gold-btn" onclick="saveTargets()">Save routine</button><button class="ghost-btn danger" onclick="resetAll()">Reset all data</button></div></div>
+
+<div id="finalModal" class="overlay"><div class="modal"><div class="modal-top"><div><h3>100 days complete.</h3><div class="modal-sub">Now compare yourself with Day 1 — not with anyone else.</div></div><button class="close" onclick="closeModal('finalModal')">×</button></div><div id="finalReview" class="review"></div><button class="gold-btn" onclick="exportData()">Export my 100-day record</button></div></div>
+
+<script>
+const DEFAULT_TARGETS=[
+ '5 prayers today',
+ 'Tahajjud / extra prayer',
+ 'Quran reading + zikr',
+ 'Workout / exercise',
+ 'Mobile screen time ≤ 2 hours',
+ 'Created content',
+ 'Posted work on LinkedIn / Facebook',
+ '30 min speaking practice in the mirror',
+ 'English speaking practice',
+ 'Learned something new in Make.com / my skill',
+ '50 targeted outreach messages',
+ '3–4 hours focused work on my skill',
+ 'Drank 3L water',
+ 'Skill revision',
+ 'Planned tomorrow before sleep'
+];
+const QUOTES=[
+ 'Small steps. Serious change.','Discipline first. Motivation later.','You do not need a new life. You need better days.','One focused day can change the direction of a year.','Keep the promise you made to yourself.','Your next version is built today.','Do it quietly. Let the results make the noise.','Progress beats perfection.','Do not restart tomorrow. Continue today.','100 days. 1% better. Every single day.'
+];
+const $=id=>document.getElementById(id);
+let state={start:null,targets:[...DEFAULT_TARGETS],days:{}};
+try{const saved=JSON.parse(localStorage.getItem('khalid100_v3')||'null');if(saved)state={...state,...saved};}catch(e){}
+function save(){localStorage.setItem('khalid100_v3',JSON.stringify(state));}
+function iso(d){return d.toISOString().slice(0,10)}
+function dateFor(n){let d=new Date(state.start+'T00:00:00');d.setDate(d.getDate()+n-1);return d}
+function dayNum(){if(!state.start)return 1;let s=new Date(state.start+'T00:00:00');return Math.floor((Date.now()-s.getTime())/86400000)+1}
+function clampDay(){return Math.min(100,Math.max(1,dayNum()))}
+function rec(n){if(!state.days[n])state.days[n]={items:{},note:'',locked:false,targetSnapshot:[...state.targets]};return state.days[n]}
+function pct(n){let r=state.days[n];if(!r)return 0;let list=r.targetSnapshot||state.targets;let done=list.reduce((a,_,i)=>a+(r.items[i]?1:0),0);return Math.round(done/(list.length||1)*100)}
+function status(n,cur){if(n>cur)return'future';let r=state.days[n];if(r?.locked)return pct(n)>=70?'done':pct(n)>0?'partial':'missed';return n===cur?'today':'missed'}
+function streak(){let cur=clampDay(),s=0;for(let n=cur;n>=1;n--){if(state.days[n]?.locked&&pct(n)>=70)s++;else break}return s}
+function render(){
+ if(!state.start){$('setup').style.display='block';$('main').style.display='none';$('startDate').value=iso(new Date());return}
+ $('setup').style.display='none';$('main').style.display='block';
+ const cur=clampDay();
+ $('currentPill').textContent=`DAY ${cur} / 100`;
+ $('progressBar').style.width=`${cur}%`;
+ let logged=0,total=0,best=0;for(let n=1;n<=100;n++){if(state.days[n]?.locked){logged++;total+=pct(n);best=Math.max(best,pct(n));}}
+ $('locked').textContent=logged;$('avg').textContent=logged?Math.round(total/logged)+'%':'0%';$('best').textContent=best+'%';$('streak').textContent=streak();$('quote').textContent='“'+QUOTES[(cur-1)%QUOTES.length]+'”';
+ const g=$('grid');g.innerHTML='';
+ for(let n=1;n<=100;n++){let el=document.createElement('div');let st=status(n,cur);el.className='day '+st;el.innerHTML=`<span class="n">${n}</span><span class="pct">${n<=cur?(state.days[n]?.locked?pct(n)+'%':'—'):'—'}</span>`;if(st!=='future')el.onclick=()=>openDay(n);g.appendChild(el)}
+ if(cur===100 && state.days[100]?.locked) showFinal();
+}
+function startChallenge(){let v=$('startDate').value;if(!v)return;state.start=v;save();render()}
+function openDay(n){
+ let cur=clampDay(),r=rec(n);$('dayTitle').textContent=`Day ${n}`;$('daySub').textContent=dateFor(n).toLocaleDateString(undefined,{day:'numeric',month:'long',year:'numeric'});
+ if(n>cur)return;
+ const list=r.targetSnapshot&&r.targetSnapshot.length?r.targetSnapshot:state.targets;
+ $('checks').innerHTML='';
+ list.forEach((t,i)=>{let row=document.createElement('div');row.className='check';let cb=document.createElement('input');cb.type='checkbox';cb.checked=!!r.items[i];cb.disabled=r.locked;cb.onchange=()=>{r.items[i]=cb.checked;save();render()};let lab=document.createElement('label');lab.textContent=t;row.append(cb,lab);$('checks').appendChild(row)});
+ $('note').value=r.note||'';$('note').disabled=r.locked;
+ $('dayReview').style.display=r.locked?'block':'none';if(r.locked)$('dayReview').innerHTML=`<h4>${pct(n)}% complete</h4><p>Day ${n} is locked. Keep moving forward.</p>`;
+ const lock=$('dayModal').querySelector('.row2 button:last-child');lock.textContent=r.locked?'Day locked':'Lock today’s day';lock.disabled=r.locked||n!==cur;lock.style.opacity=lock.disabled?.5:1;
+ $('dayModal').classList.add('show');
+}
+function saveDayNote(){let n=parseInt($('dayTitle').textContent.replace('Day ',''));let r=rec(n);r.note=$('note').value;save();render()}
+function lockToday(){let n=parseInt($('dayTitle').textContent.replace('Day ','')),cur=clampDay();if(n!==cur)return;let r=rec(n);r.note=$('note').value;r.locked=true;r.targetSnapshot=[...state.targets];save();closeModal('dayModal');render()}
+function openSettings(){let wrap=$('targets');wrap.innerHTML='';state.targets.forEach(t=>addTarget(t));$('settingsModal').classList.add('show')}
+function addTarget(value=''){let row=document.createElement('div');row.className='target-row';row.innerHTML=`<input class="field" type="text" value="${String(value).replaceAll('&','&amp;').replaceAll('"','&quot;')}" placeholder="e.g. Study 60 minutes"><button onclick="this.parentElement.remove()">×</button>`;$('targets').appendChild(row)}
+function saveTargets(){let vals=[...$('targets').querySelectorAll('input')].map(x=>x.value.trim()).filter(Boolean);if(!vals.length){alert('Add at least one target.');return}state.targets=vals;save();closeModal('settingsModal');render()}
+function closeModal(id){$(id).classList.remove('show')}
+function exportData(){let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='khalid-100-day-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function resetAll(){if(!confirm('Delete your 100-day tracker from this browser?'))return;localStorage.removeItem('khalid100_v3');location.reload()}
+function showFinal(){const logged=Object.keys(state.days).filter(k=>state.days[k]?.locked).length;const avg=logged?Math.round(Object.keys(state.days).reduce((a,k)=>a+pct(k),0)/logged):0;$('finalReview').innerHTML=`<h4>Your record</h4><p><b>${logged}/100</b> days logged</p><p><b>${avg}%</b> average completion across logged days</p><p><b>${streak()}</b> current streak</p><p>The real win is the person you built through the process. Compare Day 100 with Day 1.</p>`;$('finalModal').classList.add('show')}
+render();
+</script>
+</body>
+</html>
